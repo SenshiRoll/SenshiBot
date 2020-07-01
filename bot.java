@@ -13,20 +13,20 @@ import java.util.*;
 
 public class bot extends ListenerAdapter{
 	public static void main(String[] args) throws Exception{
-		new JDABuilder("NzA4ODYyODQ0MjQxODM4MDky.XrdimA.C8uFywHMzeF3kCBLmQHBTQsKLzQ")
+		new JDABuilder("<censored>")
 			.addEventListeners(new bot())
 			.setActivity(Activity.playing("with myself so you don't have to."))
 			.build();
 	}
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		//String crypticraft="687312985286508569";
-		String testing="707304216552669225";
+		String crypticraft="<censored>";
+		String testing="<censored>";
 		Guild server=event.getGuild();
 		User user=event.getAuthor(); 
 		MessageChannel channel=event.getChannel();
 		Member member=event.getMember();
-		//MessageChannel botSpam=server.getTextChannelById("709222717588766811");	
+		MessageChannel botSpam=server.getTextChannelById("<censored>");	
 		if (event.getAuthor().isBot()) {return;}
 			String msg=normalizeText(event.getMessage());		
 		if (server.getId().equals(testing)) {
