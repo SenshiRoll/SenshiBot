@@ -1,5 +1,9 @@
-package testingBot;
-import net.dv8tion.jda.api.*;
+package src;
+
+import java.util.List;
+import java.util.Random;
+
+import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -9,7 +13,6 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import java.util.*;
 
 public class bot extends ListenerAdapter{
 	public static void main(String[] args) throws Exception{
@@ -20,18 +23,18 @@ public class bot extends ListenerAdapter{
 	}
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		String crypticraft="<censored>";
-		String testing="<censored>";
+		String crypticraft="687312985286508569";
+		String testing="707304216552669225";
 		Guild server=event.getGuild();
 		User user=event.getAuthor(); 
 		MessageChannel channel=event.getChannel();
 		Member member=event.getMember();
-		MessageChannel botSpam=server.getTextChannelById("<censored>");	
+		MessageChannel botSpam=server.getTextChannelById("709222717588766811");	
 		if (event.getAuthor().isBot()) {return;}
 			String msg=normalizeText(event.getMessage());		
-		if (server.getId().equals(testing)) {
-			//if (event.getChannel() != botSpam) {return;}
-			if (event.getMessage().getContentRaw().indexOf("!")==0) {channel.sendMessage("```command method called```").queue();;
+		if (server.getId().equals(crypticraft) || server.getId().equals(testing)) {
+			if (event.getChannel() != botSpam && !server.getId().equals(testing)) {return;}
+			if (event.getMessage().getContentRaw().indexOf("!")==0) {channel.sendMessage("```command method called```").queue();
 				commands(event.getMessage().getContentRaw(),user,member,channel,server);
 			} else {MessageReactions(msg,user,channel);}
 		} else {
