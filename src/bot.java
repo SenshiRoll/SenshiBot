@@ -30,7 +30,10 @@ public class bot extends ListenerAdapter{
 		//MessageChannel botSpam=server.getTextChannelById("709222717588766811");	
 		if (event.getAuthor().isBot()) {return;}
 		String msg=normalizeText(event.getMessage());
-		if(event.getMessage().getContentRaw().indexOf("!")==0){Commands.commandManager(msg, user, member, channel, server);} else {
+		if(event.getMessage().getContentRaw().indexOf("!")==0){
+			Commands.commandManager(msg, user, member, channel, server);
+			channel.sendMessage("```command method called```").queue();
+		} else {
 			MessageReactions(msg, user, channel);
 		}
 		

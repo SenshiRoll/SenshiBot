@@ -13,11 +13,11 @@ public class Commands {
     static String CCMember="692033739873583197";
     static String testingHiatus="724904304699375669";
     static String testingMember="724904279072047134";
-    
+
     public static void commandManager(String msg,User user,Member member,MessageChannel channel,Guild server) {
-        if (msg.equals("!hiatus")) {hiatus(user,member,channel,server);}
-        if (msg.equals("!return")) {returnMember(user, member, channel, server);}
-		if(msg.equals("!roles")) {roles(member, channel);}
+        if (msg.equals("HIATUS")) {hiatus(user,member,channel,server);}
+        if (msg.equals("RETURN")) {returnMember(user, member, channel, server);}
+		if(msg.equals("ROLES")) {roles(member, channel);}
     }
 
     private static void hiatus(User user, Member member, MessageChannel channel, Guild server) {
