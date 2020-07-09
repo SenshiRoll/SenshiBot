@@ -1,6 +1,5 @@
 package src;
 
-import java.util.List;
 import java.util.Random;
 
 import net.dv8tion.jda.api.JDABuilder;
@@ -9,12 +8,13 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class bot extends ListenerAdapter{
+	public static String crypticraft="687312985286508569";
+	public static String testing="707304216552669225";
 	public static void main(String[] args) throws Exception{
 		new JDABuilder("<censored>")
 			.addEventListeners(new bot())
@@ -23,23 +23,17 @@ public class bot extends ListenerAdapter{
 	}
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		String crypticraft="687312985286508569";
-		String testing="707304216552669225";
 		Guild server=event.getGuild();
 		User user=event.getAuthor(); 
 		MessageChannel channel=event.getChannel();
 		Member member=event.getMember();
-		MessageChannel botSpam=server.getTextChannelById("709222717588766811");	
+		//MessageChannel botSpam=server.getTextChannelById("709222717588766811");	
 		if (event.getAuthor().isBot()) {return;}
-			String msg=normalizeText(event.getMessage());		
-		if (server.getId().equals(crypticraft) || server.getId().equals(testing)) {
-			if (event.getChannel() != botSpam && !server.getId().equals(testing)) {return;}
-			if (event.getMessage().getContentRaw().indexOf("!")==0) {channel.sendMessage("```command method called```").queue();
-				commands(event.getMessage().getContentRaw(),user,member,channel,server);
-			} else {MessageReactions(msg,user,channel);}
-		} else {
-			MessageReactions(msg,user,channel);
+		String msg=normalizeText(event.getMessage());
+		if(event.getMessage().getContentRaw().indexOf("!")==0){Commands.commandManager(msg, user, member, channel, server);} else {
+			MessageReactions(msg, user, channel);
 		}
+		
 	}
 	private String normalizeText(Message message) {
 		String text=message.getContentRaw();
@@ -86,27 +80,5 @@ public class bot extends ListenerAdapter{
 			channel.sendMessage("Online!").queue();
 		}
 	}
-	private void commands(String msg,User user,Member member,MessageChannel channel,Guild server) {
-		List<Role> roles=member.getRoles();
-		if (msg.equals("!hiatus") && (roles.get(0).getName().equals("member") || roles.get(1).getName().equals("member"))) {
-			server.removeRoleFromMember(member, server.getRolesByName("member", true).get(0)); roles(roles,channel);
-			server.addRoleToMember(member,server.getRolesByName("hiatus", true).get(0)); roles(roles,channel);
-			channel.sendMessage("```role applied```").queue();
-		}
-		if (msg.equals("!return") && (roles.get(0).getName().equals("hiatus") || roles.get(1).getName().equals("hiatus"))) {
-			server.removeRoleFromMember(member, server.getRolesByName("hiatus", true).get(0)); roles(roles,channel);
-			server.addRoleToMember(member, server.getRolesByName("member", true).get(0)); roles(roles,channel);
-			channel.sendMessage("```role applied```").queue();
-		}
-		if(msg.equals("!roles")) {
-			for (int i=0;i<roles.size();i++) {
-				channel.sendMessage(i+1+":`"+roles.get(i).getName()+"`").queue();
-			}
-		}
-	}
-	private void roles(List<Role> roles, MessageChannel channel) {
-		for (int i=0;i<roles.size();i++) {
-			channel.sendMessage(i+1+":`"+roles.get(i).getName()+"`").queue();
-		}
-	}
+	
 }
