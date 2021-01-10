@@ -1,6 +1,10 @@
 package src;
 
 import java.util.Random;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.File;
+import java.io.BufferedReader;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -16,10 +20,12 @@ public class bot extends ListenerAdapter{
 	public static String crypticraft="687312985286508569";
 	public static String testing="707304216552669225";
 	public static void main(String[] args) throws Exception{
-		new JDABuilder("<censored>")
+		String token=token();
+		bot SenshiBot=new bot();
+		new JDABuilder.create(GatewayIntent.ALL_INTENTS)
 			.addEventListeners(new bot())
 			.setActivity(Activity.playing("with myself so you don't have to."))
-			.build();
+			.build().awaitReady();
 	}
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
@@ -83,5 +89,9 @@ public class bot extends ListenerAdapter{
 			channel.sendMessage("Online!").queue();
 		}
 	}
-	
+	private static String token() throws IOException {
+		BufferedReader t=new BufferedReader(new FileReader(new File("C:/Coding/Java/SenshiBot/senshibot token.txt")));
+		return t.readLine();
+	}
+		
 }
